@@ -15,4 +15,16 @@
 		WHERE
 			USER_ID = #{userId}
 	</select>
+
+	<select id="selectUserList" resultType="com.jylee.api.vo.userVO">
+		SELECT
+			  USER_ID		AS userId
+			, USER_NAME		AS userName
+			, USER_PW		AS userPw
+			, USER_EMAIL	AS userEmail
+			, USER_AUTH		AS userAuth
+		FROM
+			USER_INFO
+	</select>
+
 </mapper>

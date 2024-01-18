@@ -1,5 +1,7 @@
 package com.jylee.api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.jylee.api.mapper.userMapper;
@@ -16,5 +18,9 @@ public class userService {
 
 	public userVO selectUser(String userId) {
 		return usermapper.selectUser(userId);
+	}
+
+	public List<userVO> selectUserList(){
+		return usermapper.selectUserList();
 	}
 }
