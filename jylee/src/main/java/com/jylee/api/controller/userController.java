@@ -2,6 +2,8 @@ package com.jylee.api.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +58,30 @@ public class userController {
 	public List<userVO> selectUserList() throws Exception{
 		log.debug("##### Request userList ####");
 
-		return userservice.selectUserList();
+		long startTime = System.currentTimeMillis();
+
+		List<userVO> userList = userservice.selectUserList();
+
+		log.debug("### userList => {} ###", userList);
+
+		Map<String,String> map = userList.stream()
+				.filter(user -> "2".equals(user.getUserAuth()))
+				.collect(Collectors.toMap(m1->m1.getUserId(), m2->m2.getUserAuth(),(oldVal, newVal)-> oldVal));
+				//.collect(Collectors.toMap(userVO::getUserId, userVO::getUserAuth));
+
+		log.debug("### map => {} ###", map);
+
+		List<userVO> list = userList.stream()
+				.filter(user -> "2".equals(user.getUserAuth()))
+				.collect(Collectors.toList());
+
+		log.debug("### list => {} ###", list);
+
+		long endTime = System.currentTimeMillis();
+
+		log.debug("### 시작시간 => {} \n 종료시간 => {} \n 소요시간 => {} ms",startTime, endTime, endTime - startTime);
+
+		return userList;
 	}
 
 }
