@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jylee.api.mapper.noticeMapper">
+
+	<select id="selectNoticeId" resultType="string">
+		SELECT CONCAT('ntc',IFNULL(COUNT(ntc_Id),0)+1) FROM NOTICE
+	</select>
+
+	<select id="selectNoticeList" resultType="com.jylee.api.vo.noticeVO">
+		SELECT
+			  NTC_ID		AS ntcId
+			, NTC_TITLE 	AS ntcTitle
+			, NTC_CONTENTS 	AS ntcContents
+			, NTC_FILE_ID 	AS ntcFileId
+		FROM
+			NOTICE
+	</select>
+
+	<insert id="insertNotice" parameterType="com.jylee.api.vo.noticeVO">
+		INSERT INTO NOTICE(
+			  NTC_ID
+			, NTC_TITLE
+			, NTC_CONTENTS
+			, NTC_FILE_ID
+		) VALUES(
+			  #{ntcId}
+			, #{ntcTitle}
+			, #{ntcContents}
+			, #{ntcFileId}
+		)
+	</insert>
+</mapper>

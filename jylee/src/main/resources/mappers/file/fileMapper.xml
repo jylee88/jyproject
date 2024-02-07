@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jylee.api.mapper.fileMapper">
+
+	<insert id="insertFile" parameterType="com.jylee.api.vo.fileVO">
+		INSERT INTO COMMON_FILE(
+			FILE_ID
+			, FILE_SEQ
+			, SAVE_PATH
+			, ORIGINAL_NAME
+			, FORMAT
+			, REG_DATE
+			, SIZE
+		)VALUES(
+			#{fileId}
+			, #{fileSeq}
+			, #{savePath}
+			, #{originalName}
+			, #{format}
+			, NOW()
+			, #{size}
+		)
+	</insert>
+</mapper>

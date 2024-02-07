@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jylee.api.Test.TestInterface;
+import com.jylee.api.Test.TestManager;
 import com.jylee.api.service.userService;
 import com.jylee.api.vo.userVO;
 
@@ -24,6 +26,13 @@ public class userController {
 
 	public userController(userService userservice) {
 		this.userservice = userservice;
+	}
+
+	@RequestMapping(value="/test")
+	public String test() {
+		TestInterface t = TestManager.getClass("Test");
+
+		return t.test();
 	}
 
 	/*
@@ -62,20 +71,14 @@ public class userController {
 
 		List<userVO> userList = userservice.selectUserList();
 
-		log.debug("### userList => {} ###", userList);
-
 		Map<String,String> map = userList.stream()
 				.filter(user -> "2".equals(user.getUserAuth()))
 				.collect(Collectors.toMap(m1->m1.getUserId(), m2->m2.getUserAuth(),(oldVal, newVal)-> oldVal));
 				//.collect(Collectors.toMap(userVO::getUserId, userVO::getUserAuth));
 
-		log.debug("### map => {} ###", map);
-
 		List<userVO> list = userList.stream()
 				.filter(user -> "2".equals(user.getUserAuth()))
 				.collect(Collectors.toList());
-
-		log.debug("### list => {} ###", list);
 
 		long endTime = System.currentTimeMillis();
 
